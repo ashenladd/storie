@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFAFAFA</color>
+    <color name="colorSubtitle">#757575</color>
+
+    <color name="Neutral1">#FFFFFFFF</color>
+    <color name="Neutral2">#FFFAFAFA</color>
+    <color name="Neutral3">#FFAAAAAA</color>
+    <color name="Neutral4">#FF444444</color>
+    <color name="Neutral5">#FF212121</color>
+    <color name="NeutralStroke">#FFE7E7E7</color>
+
+    <color name="blu50">#FFF0F8FF</color>
+    <color name="blue100">#FFe0f0fe</color>
+    <color name="blue200">#FFb9e2fe</color>
+    <color name="blue300">#FF7bccfe</color>
+    <color name="blue400">#FF36b2fa</color>
+    <color name="blue500">#FF0b99ec</color>
+    <color name="blue600">#FF0079c9</color>
+    <color name="blue700">#FF0160a3</color>
+    <color name="blue800">#FF055187</color>
+    <color name="blue900">#FF0b446f</color>
+    <color name="blue950">#FF041829</color>
+
+
+    <color name="yellow50">#FFFDFBED</color>
+    <color name="yellow100">#FFF9f4cc</color>
+    <color name="yellow200">#FFf3e894</color>
+    <color name="yellow300">#FFedd75c</color>
+    <color name="yellow400">#FFeac944</color>
+    <color name="yellow500">#FFe1a91f</color>
+    <color name="yellow600">#FFc78418</color>
+    <color name="yellow700">#FFa56018</color>
+    <color name="yellow800">#FF874c19</color>
+    <color name="yellow900">#FF6f3e18</color>
+    <color name="yellow950">#FF3f2009</color>
+    <color name="light_blue_50">#FFE1F5FE</color>
+    <color name="light_blue_200">#FF81D4FA</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
+</resources>

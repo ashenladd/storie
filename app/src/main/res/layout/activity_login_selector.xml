@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue950"
+    tools:context=".feature.LoginSelectorActivity">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_blogging"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/img_blogging" />
+
+    <TextView
+        android:id="@+id/tv_headline"
+        style="@style/TextContent.Heading.Large"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="36dp"
+        android:alpha="0"
+        android:text="@string/label_unlock_your_next_chapter"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_blogging"
+        tools:alpha="1" />
+
+    <TextView
+        android:id="@+id/tv_body"
+        style="@style/TextContent.Paragraph.Small"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="36dp"
+        android:layout_marginTop="16dp"
+        android:alpha="0"
+        android:text="@string/desc_onboarding"
+        android:textAlignment="center"
+        android:textColor="@color/Neutral3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_headline"
+        tools:alpha="1" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_signup"
+            style="@style/ButtonGeneral.SecondaryVariant"
+            android:layout_width="172dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="-16dp"
+            android:background="@drawable/bg_button_white_ripple"
+            android:text="@string/label_register"
+            app:layout_constraintStart_toEndOf="@id/btn_signin"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_signin"
+            style="@style/ButtonGeneral.PrimaryVariant"
+            android:layout_width="172dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_button_yellow_ripple"
+            android:text="@string/label_signin"
+            android:textAllCaps="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

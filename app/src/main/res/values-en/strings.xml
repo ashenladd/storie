@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">storie</string>
+    <string name="label_unlock_your_next_chapter">Unlock Your Next Chapter</string>
+    <string name="desc_onboarding">Share snippets of your life, evoke emotions, and tell your story one frame at a time. Find your voice and connect.</string>
+    <string name="label_register">Register</string>
+    <string name="label_signin">Login</string>
+    <string name="hint_password">Enter Password</string>
+    <string name="hint_username">Enter Username</string>
+    <string name="label_don_t_have_an_account_register">Don\'t have an account yet? <u>Sign up</u></string>
+    <string name="label_already_have_an_account_login">Already have an account? <u>Sign in</u></string>
+    <string name="hint_email">Enter Email</string>
+    <string name="title_login">Let\'s go in!</string>
+    <string name="subtitle_login">Do we miss you? Of course!</string>
+    <string name="title_register">Register Now!</string>
+    <string name="subtitle_register">Join and Create an Amazing Experience</string>
+    <string name="label_setting">setting</string>
+    <string name="title_home">Welcome Back, \n%s</string>
+    <string name="label_your_story">Your Stories</string>
+    <string name="validation_email">Enter a valid Email</string>
+    <string name="validation_password">Password must not be less than 8 characters</string>
+    <string name="label_login_success">Login Successful!</string>
+    <string name="label_cerita">Stories</string>
+    <string name="desc_retry">Didn\'t work? \nTry again!</string>
+    <string name="label_retry">Retry</string>
+    <string name="format_created_at">Created on %s</string>
+    <string name="label_log_out">Log out</string>
+    <string name="label_photo">Photo</string>
+    <string name="label_gallery">Gallery</string>
+    <string name="hint_post">Write your story</string>
+    <string name="label_change_language">Change Language</string>
+    <string name="format_detail_nama">%s\'s story</string>
+    <string name="title_carousel_1">Discover New Stories Every Day</string>
+    <string name="title_carousel_2">Step into the World of Stories</string>
+    <string name="title_carousel_3">Find Your Next Escape</string>
+</resources>

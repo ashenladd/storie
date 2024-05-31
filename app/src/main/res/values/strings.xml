@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">storie</string>
+    <string name="label_unlock_your_next_chapter">Buka Bab Anda Berikutnya</string>
+    <string name="desc_onboarding">Bagikan cuplikan kehidupan Anda, bangkitkan emosi, dan ceritakan kisah Anda satu per satu. Temukan suara Anda dan terhubunglah.</string>
+    <string name="label_register">Daftar</string>
+    <string name="label_signin">Masuk</string>
+    <string name="hint_password">Masukkan Password</string>
+    <string name="hint_username">Masukkan Username</string>
+    <string name="label_don_t_have_an_account_register">Belum memiliki akun? <u>Daftar</u></string>
+    <string name="label_already_have_an_account_login">Sudah memiliki akun? <u>Masuk</u></string>
+    <string name="hint_email">Masukkan Email</string>
+    <string name="title_login">Ayo masuk!</string>
+    <string name="subtitle_login">Apakah kami merindukanmu? Tentu saja!</string>
+    <string name="title_register">Daftar Sekarang!</string>
+    <string name="subtitle_register">Bergabung dan Ciptakan Pengalaman Luar Biasa.</string>
+    <string name="label_setting">setting</string>
+    <string name="title_home">Selamat Datang Kembali, \n%s</string>
+    <string name="label_your_story">Cerita Kamu</string>
+    <string name="validation_email">Masukkan Email yang valid</string>
+    <string name="validation_password">Password tidak boleh kurang dari 8 karakter</string>
+    <string name="label_login_success">Login Berhasil!</string>
+    <string name="label_cerita">Cerita</string>
+    <string name="desc_retry">Tidak berhasil? \nCoba lagi!</string>
+    <string name="label_retry">Ulang</string>
+    <string name="format_created_at">Dibuat pada %s</string>
+    <string name="label_log_out">Log out</string>
+    <string name="label_photo">Foto</string>
+    <string name="label_gallery">Galeri</string>
+    <string name="hint_post">Tulis cerita anda</string>
+    <string name="label_change_language">Ganti Bahasa</string>
+    <string name="format_detail_nama">Cerita %s</string>
+    <string name="title_carousel_1">Temukan Cerita Baru Setiap Hari</string>
+    <string name="title_carousel_2">Masuki Dunia Cerita</string>
+    <string name="title_carousel_3">Temukan Pelarian Anda Berikutnya</string>
+</resources>
