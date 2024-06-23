@@ -9,7 +9,7 @@ fun StoryResponseItem.toModel() = StoryModel(
     createdAt = createdAt ?: "",
     name = name ?: "",
     description = description ?: "",
-    lon = lon ?: "",
+    lon = lon ?: 0.0,
     id = id ?: "",
-    lat = lat ?: ""
+    lat = lat ?: 0.0
 )

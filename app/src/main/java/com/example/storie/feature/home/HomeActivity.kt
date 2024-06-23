@@ -22,6 +22,7 @@ import com.example.storie.feature.detail.DetailActivity
 import com.example.storie.feature.home.adapter.CarouselAdapter
 import com.example.storie.feature.home.adapter.StoriesAdapter
 import com.example.storie.feature.login.LoginActivity
+import com.example.storie.feature.maps.MapsActivity
 import com.example.storie.feature.post.PostActivity
 import com.google.android.material.carousel.CarouselLayoutManager
 import com.google.android.material.carousel.HeroCarouselStrategy
@@ -86,10 +87,24 @@ class HomeActivity : AppCompatActivity() {
                         true
                     }
 
-                    else -> false
+                    R.id.map -> {
+                        navigateToMaps()
+                        true
+                    }
+                    else -> {
+                        false
+                    }
                 }
             }
         }
+    }
+
+    private fun navigateToMaps() {
+        val intent = Intent(
+            this,
+            MapsActivity::class.java
+        )
+        startActivity(intent)
     }
 
     private fun setupAdapter() {

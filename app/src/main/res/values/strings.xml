@@ -32,4 +32,6 @@
     <string name="title_carousel_1">Temukan Cerita Baru Setiap Hari</string>
     <string name="title_carousel_2">Masuki Dunia Cerita</string>
     <string name="title_carousel_3">Temukan Pelarian Anda Berikutnya</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="label_map">map</string>
 </resources>

@@ -100,6 +100,35 @@ class AppRepositoryImpl @Inject constructor(
         }.onStart { emit(Result.Loading) }
     }
 
+    override suspend fun getStoriesWithLocation(
+        page: Int?,
+        size: Int?,
+        location: Int?,
+    ): Flow<Result<StoriesResponse>> {
+        return flow {
+            try {
+                val response = apiService.getStories(
+                    page,
+                    size,
+                    location
+                )
+                if (response.isSuccessful) {
+                    emit(Result.Success(response.body() ?: StoriesResponse()))
+                } else {
+                    val errorBody = response.errorBody()
+                    val apiError =
+                        Gson().fromJson(
+                            errorBody?.string() ?: "",
+                            ApiError::class.java
+                        )
+                    emit(Result.Error(apiError.message ?: "Unknown error"))
+                }
+            } catch (e: Exception) {
+                emit(Result.Error(e.message ?: "Unknown error"))
+            }
+        }.onStart { emit(Result.Loading) }
+    }
+
     override suspend fun getDetailStory(
         id: String,
     ): Flow<Result<StoryResponse>> {

@@ -23,6 +23,12 @@ interface AppRepository {
         location: Int? = null,
     ): Flow<Result<StoriesResponse>>
 
+    suspend fun getStoriesWithLocation(
+        page: Int? = null,
+        size: Int? = null,
+        location: Int? = 1,
+    ): Flow<Result<StoriesResponse>>
+
     suspend fun getDetailStory(id: String): Flow<Result<StoryResponse>>
 
     suspend fun postStory(
