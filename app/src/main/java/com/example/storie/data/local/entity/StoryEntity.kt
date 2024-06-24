@@ -18,5 +18,5 @@ data class StoryEntity(
 
     val lon: Double? = null,
 
-    val lat: Double? = null
+    val lat: Double? = null,
 )

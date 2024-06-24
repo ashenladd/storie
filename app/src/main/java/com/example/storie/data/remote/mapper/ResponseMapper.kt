@@ -32,5 +32,5 @@ fun StoryEntity.toModel() = StoryModel(
     description = description.orEmpty(),
     lon = lon ?: 0.0,
     id = id,
-    lat = lat  ?: 0.0
+    lat = lat ?: 0.0
 )

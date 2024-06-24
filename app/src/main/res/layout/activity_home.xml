@@ -21,13 +21,41 @@
             android:importantForAccessibility="no"
             android:src="@drawable/ic_add"
             app:backgroundTint="@color/yellow500"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:tint="@color/black" />
 
-        <include
+        <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/lyt_appbar_home"
-            layout="@layout/layout_app_bar_home" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:fitsSystemWindows="true"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="@color/blue950">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/tb_home"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@android:color/transparent"
+                android:elevation="0dp"
+                app:menu="@menu/menu_home"
+                app:navigationIconTint="@color/white"
+                app:titleTextAppearance="@style/TextAppearance.Material3.HeadlineSmall">
+
+                <ImageButton
+                    android:id="@+id/btn_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_button_transparent_blue_ripple"
+                    android:contentDescription="@string/label_log_out"
+                    android:src="@drawable/ic_user"
+                    app:tint="@color/white" />
+
+            </com.google.android.material.appbar.MaterialToolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
 
         <TextView
             android:id="@+id/tv_title_home"

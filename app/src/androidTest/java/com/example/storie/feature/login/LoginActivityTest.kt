@@ -35,6 +35,7 @@ class LoginActivityTest {
     fun setup() {
         IdlingRegistry.getInstance().register(EspressoIdlingResource.countingIdlingResource)
     }
+
     @After
     fun tearDown() {
         IdlingRegistry.getInstance().unregister(EspressoIdlingResource.countingIdlingResource)
@@ -45,10 +46,17 @@ class LoginActivityTest {
         onView(withId(R.id.tv_title_login)).check(matches(isDisplayed()))
         onView(withId(R.id.tv_subtitle_login)).check(matches(isDisplayed()))
     }
+
     @Test
     fun testLoginSuccess() {
-        onView(withId(R.id.ed_login_email)).perform(typeText("mister@gmail.com"), closeSoftKeyboard())
-        onView(withId(R.id.ed_login_password)).perform(typeText("12345678"), closeSoftKeyboard())
+        onView(withId(R.id.ed_login_email)).perform(
+            typeText("mister@gmail.com"),
+            closeSoftKeyboard()
+        )
+        onView(withId(R.id.ed_login_password)).perform(
+            typeText("12345678"),
+            closeSoftKeyboard()
+        )
         onView(withId(R.id.btn_login)).perform(click())
 
         // Wait for the login process to complete
@@ -58,8 +66,14 @@ class LoginActivityTest {
 
     @Test
     fun testLoginFailed() {
-        onView(withId(R.id.ed_login_email)).perform(typeText("invalid_email"), closeSoftKeyboard())
-        onView(withId(R.id.ed_login_password)).perform(typeText("invalid_password"), closeSoftKeyboard())
+        onView(withId(R.id.ed_login_email)).perform(
+            typeText("invalid_email"),
+            closeSoftKeyboard()
+        )
+        onView(withId(R.id.ed_login_password)).perform(
+            typeText("invalid_password"),
+            closeSoftKeyboard()
+        )
         onView(withId(R.id.btn_login)).perform(click())
 
         // Wait for the error dialog to appear

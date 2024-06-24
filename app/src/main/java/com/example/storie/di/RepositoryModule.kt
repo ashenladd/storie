@@ -16,6 +16,9 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideAppRepository(database: StoryDatabase, apiService: ApiService): AppRepository {
-        return AppRepositoryImpl(database, apiService)
+        return AppRepositoryImpl(
+            database,
+            apiService
+        )
     }
 }

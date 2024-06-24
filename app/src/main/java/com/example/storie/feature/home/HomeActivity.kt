@@ -83,10 +83,10 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setupToolbar() {
         binding.apply {
-            lytAppbarHome.toolbar.setNavigationOnClickListener {
+            btnAccount.setOnClickListener {
                 showUserMenu(it)
             }
-            lytAppbarHome.toolbar.setOnMenuItemClickListener { menu ->
+            tbHome.setOnMenuItemClickListener { menu ->
                 when (menu.itemId) {
                     R.id.setting -> {
                         showSettingMenu(findViewById(R.id.setting))
