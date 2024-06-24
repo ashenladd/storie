@@ -1,9 +1,11 @@
 package com.example.storie.data.repository
 
+import androidx.lifecycle.LiveData
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.liveData
 import com.example.storie.data.Result
 import com.example.storie.data.StoryRemoteMediator
 import com.example.storie.data.local.database.StoryDatabase
@@ -141,7 +143,7 @@ class AppRepositoryImpl @Inject constructor(
         page: Int?,
         size: Int?,
         location: Int?,
-    ): Flow<PagingData<StoryEntity>> {
+    ): LiveData<PagingData<StoryEntity>> {
         @OptIn(ExperimentalPagingApi::class)
         return Pager(
             config = PagingConfig(
@@ -154,7 +156,7 @@ class AppRepositoryImpl @Inject constructor(
             pagingSourceFactory = {
                 database.storyDao().getAllStory()
             }
-        ).flow
+        ).liveData
     }
 
 

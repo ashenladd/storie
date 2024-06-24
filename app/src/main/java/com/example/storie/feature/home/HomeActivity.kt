@@ -3,6 +3,7 @@ package com.example.storie.feature.home
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
@@ -61,10 +62,15 @@ class HomeActivity : AppCompatActivity() {
         }
 
         setupObserver()
+        fetchUsername()
         setupCarousel()
         setupAdapter()
         setupToolbar()
         setupClickListeners()
+    }
+
+    private fun fetchUsername() {
+        mViewModel.onEvent(HomeViewEvent.FetchUsername)
     }
 
     private fun setupClickListeners() {
@@ -220,16 +226,21 @@ class HomeActivity : AppCompatActivity() {
                     }
                 }
                 launch {
-                    mViewModel.storiesPagingData.collectLatest {
-                        mStoriesPagingAdapter.submitData(it)
-                    }
-                }
-                launch {
                     mViewModel.viewEffect.collectLatest {
+                        Log.d(
+                            "HomeActivity",
+                            "setupObserver: $it"
+                        )
                         observeEffect(it)
                     }
                 }
             }
+        }
+        mViewModel.storiesPagingData.observe(this@HomeActivity) {
+            mStoriesPagingAdapter.submitData(
+                lifecycle,
+                it
+            )
         }
     }
 

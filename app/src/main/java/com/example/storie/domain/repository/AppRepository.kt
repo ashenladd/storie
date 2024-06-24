@@ -1,5 +1,6 @@
 package com.example.storie.domain.repository
 
+import androidx.lifecycle.LiveData
 import androidx.paging.PagingData
 import com.example.storie.data.Result
 import com.example.storie.data.local.entity.StoryEntity
@@ -35,7 +36,7 @@ interface AppRepository {
         page: Int? = 1,
         size: Int? = 12,
         location: Int? = 0,
-    ): Flow<PagingData<StoryEntity>>
+    ): LiveData<PagingData<StoryEntity>>
 
     suspend fun getDetailStory(id: String): Flow<Result<StoryResponse>>
 

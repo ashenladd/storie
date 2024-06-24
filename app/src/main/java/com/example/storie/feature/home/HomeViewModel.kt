@@ -1,5 +1,6 @@
 package com.example.storie.feature.home
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -10,7 +11,6 @@ import com.example.storie.data.local.entity.StoryEntity
 import com.example.storie.data.remote.mapper.toModel
 import com.example.storie.domain.repository.AppRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -32,18 +32,8 @@ class HomeViewModel @Inject constructor(
     private val _viewState = MutableStateFlow(HomeViewState())
     val viewState get() = _viewState.asStateFlow()
 
-    val storiesPagingData: Flow<PagingData<StoryEntity>> = appRepository.getStoriesPaging()
+    val storiesPagingData: LiveData<PagingData<StoryEntity>> = appRepository.getStoriesPaging()
         .cachedIn(viewModelScope)
-
-    init {
-        viewModelScope.launch {
-            _viewState.update {
-                it.copy(
-                    username = dataStoreManager.getUsername().first()
-                )
-            }
-        }
-    }
 
     fun onEvent(event: HomeViewEvent) {
         when (event) {
@@ -55,6 +45,16 @@ class HomeViewModel @Inject constructor(
                 viewModelScope.launch {
                     dataStoreManager.clearDataStore()
                     _viewEffect.emit(HomeViewEffect.OnLogout)
+                }
+            }
+
+            HomeViewEvent.FetchUsername -> {
+                viewModelScope.launch {
+                    _viewState.update {
+                        it.copy(
+                            username = dataStoreManager.getUsername().first()
+                        )
+                    }
                 }
             }
         }
