@@ -2,11 +2,15 @@ package com.example.storie.feature.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.example.storie.core.DataStoreManager
 import com.example.storie.data.Result
+import com.example.storie.data.local.entity.StoryEntity
 import com.example.storie.data.remote.mapper.toModel
 import com.example.storie.domain.repository.AppRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -28,6 +32,9 @@ class HomeViewModel @Inject constructor(
     private val _viewState = MutableStateFlow(HomeViewState())
     val viewState get() = _viewState.asStateFlow()
 
+    val storiesPagingData: Flow<PagingData<StoryEntity>> = appRepository.getStoriesPaging()
+        .cachedIn(viewModelScope)
+
     init {
         viewModelScope.launch {
             _viewState.update {
@@ -36,13 +43,12 @@ class HomeViewModel @Inject constructor(
                 )
             }
         }
-        getStories()
     }
 
     fun onEvent(event: HomeViewEvent) {
         when (event) {
-            HomeViewEvent.OnRetry -> {
-                getStories()
+            is HomeViewEvent.OnRetry -> {
+
             }
 
             HomeViewEvent.OnLogout -> {

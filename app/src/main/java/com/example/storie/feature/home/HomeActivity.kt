@@ -20,7 +20,7 @@ import com.example.storie.databinding.ActivityHomeBinding
 import com.example.storie.domain.model.CarouselModel
 import com.example.storie.feature.detail.DetailActivity
 import com.example.storie.feature.home.adapter.CarouselAdapter
-import com.example.storie.feature.home.adapter.StoriesAdapter
+import com.example.storie.feature.home.adapter.StoriesPagingAdapter
 import com.example.storie.feature.login.LoginActivity
 import com.example.storie.feature.maps.MapsActivity
 import com.example.storie.feature.post.PostActivity
@@ -36,8 +36,8 @@ class HomeActivity : AppCompatActivity() {
 
     private val mViewModel by viewModels<HomeViewModel>()
 
-    private val mStoriesAdapter: StoriesAdapter by lazy {
-        StoriesAdapter()
+    private val mStoriesPagingAdapter: StoriesPagingAdapter by lazy {
+        StoriesPagingAdapter()
     }
 
     private val mCarouselAdapter: CarouselAdapter by lazy {
@@ -91,6 +91,7 @@ class HomeActivity : AppCompatActivity() {
                         navigateToMaps()
                         true
                     }
+
                     else -> {
                         false
                     }
@@ -116,14 +117,15 @@ class HomeActivity : AppCompatActivity() {
                 false
             )
 
-            mStoriesAdapter.setOnItemClickListener(object : StoriesAdapter.OnItemClickListener {
+            mStoriesPagingAdapter.setOnItemClickListener(object :
+                StoriesPagingAdapter.OnItemClickListener {
                 override fun onItemClick(id: String) {
                     navigateToDetail(id)
                 }
             })
 
             rvCarousel.adapter = mCarouselAdapter
-            rvStories.adapter = mStoriesAdapter
+            rvStories.adapter = mStoriesPagingAdapter
         }
     }
 
@@ -211,11 +213,15 @@ class HomeActivity : AppCompatActivity() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     mViewModel.viewState.collectLatest {
-                        mStoriesAdapter.submitList(it.listStory)
                         binding.tvTitleHome.text = getString(
                             R.string.title_home,
                             it.username
                         )
+                    }
+                }
+                launch {
+                    mViewModel.storiesPagingData.collectLatest {
+                        mStoriesPagingAdapter.submitData(it)
                     }
                 }
                 launch {
@@ -242,7 +248,6 @@ class HomeActivity : AppCompatActivity() {
 
             is HomeViewEffect.OnError -> {
                 showLoading(false)
-                showRetry(true)
             }
 
             is HomeViewEffect.OnLogout -> {
@@ -283,6 +288,6 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        mViewModel.onEvent(HomeViewEvent.OnRetry)
+        mStoriesPagingAdapter.refresh()
     }
 }

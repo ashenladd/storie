@@ -1,6 +1,8 @@
 package com.example.storie.domain.repository
 
+import androidx.paging.PagingData
 import com.example.storie.data.Result
+import com.example.storie.data.local.entity.StoryEntity
 import com.example.storie.data.remote.response.LoginResponse
 import com.example.storie.data.remote.response.PostResponse
 import com.example.storie.data.remote.response.StoriesResponse
@@ -28,6 +30,12 @@ interface AppRepository {
         size: Int? = null,
         location: Int? = 1,
     ): Flow<Result<StoriesResponse>>
+
+    fun getStoriesPaging(
+        page: Int? = 1,
+        size: Int? = 12,
+        location: Int? = 0,
+    ): Flow<PagingData<StoryEntity>>
 
     suspend fun getDetailStory(id: String): Flow<Result<StoryResponse>>
 

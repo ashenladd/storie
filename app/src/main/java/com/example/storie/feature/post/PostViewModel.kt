@@ -39,6 +39,12 @@ class PostViewModel @Inject constructor(
                     event.description
                 )
             }
+
+            is PostViewEvent.OnLocation -> {
+                _viewState.update {
+                    it.copy(lat = event.lat, lon = event.lon)
+                }
+            }
         }
     }
 

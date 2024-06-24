@@ -1,6 +1,13 @@
 package com.example.storie.data.repository
 
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.example.storie.data.Result
+import com.example.storie.data.StoryRemoteMediator
+import com.example.storie.data.local.database.StoryDatabase
+import com.example.storie.data.local.entity.StoryEntity
 import com.example.storie.data.remote.network.ApiService
 import com.example.storie.data.remote.response.ApiError
 import com.example.storie.data.remote.response.LoginResponse
@@ -20,6 +27,7 @@ import java.io.File
 import javax.inject.Inject
 
 class AppRepositoryImpl @Inject constructor(
+    private val database: StoryDatabase,
     private val apiService: ApiService,
 ) : AppRepository {
     override suspend fun register(
@@ -128,6 +136,27 @@ class AppRepositoryImpl @Inject constructor(
             }
         }.onStart { emit(Result.Loading) }
     }
+
+    override fun getStoriesPaging(
+        page: Int?,
+        size: Int?,
+        location: Int?,
+    ): Flow<PagingData<StoryEntity>> {
+        @OptIn(ExperimentalPagingApi::class)
+        return Pager(
+            config = PagingConfig(
+                pageSize = 12,
+            ),
+            remoteMediator = StoryRemoteMediator(
+                database,
+                apiService
+            ),
+            pagingSourceFactory = {
+                database.storyDao().getAllStory()
+            }
+        ).flow
+    }
+
 
     override suspend fun getDetailStory(
         id: String,

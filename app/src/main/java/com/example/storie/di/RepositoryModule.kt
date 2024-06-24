@@ -1,5 +1,6 @@
 package com.example.storie.di
 
+import com.example.storie.data.local.database.StoryDatabase
 import com.example.storie.data.remote.network.ApiService
 import com.example.storie.data.repository.AppRepositoryImpl
 import com.example.storie.domain.repository.AppRepository
@@ -14,7 +15,7 @@ import javax.inject.Singleton
 object RepositoryModule {
     @Provides
     @Singleton
-    fun provideAppRepository(apiService: ApiService): AppRepository {
-        return AppRepositoryImpl(apiService)
+    fun provideAppRepository(database: StoryDatabase, apiService: ApiService): AppRepository {
+        return AppRepositoryImpl(database, apiService)
     }
 }

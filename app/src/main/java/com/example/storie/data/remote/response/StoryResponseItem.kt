@@ -3,7 +3,6 @@ package com.example.storie.data.remote.response
 import com.google.gson.annotations.SerializedName
 
 data class StoryResponseItem(
-
 	@field:SerializedName("photoUrl")
 	val photoUrl: String? = null,
 
@@ -20,7 +19,7 @@ data class StoryResponseItem(
 	val lon: Double? = null,
 
 	@field:SerializedName("id")
-	val id: String? = null,
+	val id: String,
 
 	@field:SerializedName("lat")
 	val lat: Double? = null

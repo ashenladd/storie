@@ -14,6 +14,7 @@ import com.example.storie.R
 import com.example.storie.component.AlertDialogFragment
 import com.example.storie.databinding.ActivityMapsBinding
 import com.example.storie.domain.model.StoryModel
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -55,12 +56,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun setupMapStyle() {
         try {
             val success =
-                mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style))
+                mMap.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(
+                        this,
+                        R.raw.map_style
+                    )
+                )
             if (!success) {
-                Log.e(TAG, "Style parsing failed.")
+                Log.e(
+                    TAG,
+                    "Style parsing failed."
+                )
             }
         } catch (exception: Resources.NotFoundException) {
-            Log.e(TAG, "Can't find style. Error: ", exception)
+            Log.e(
+                TAG,
+                "Can't find style. Error: ",
+                exception
+            )
         }
     }
 
@@ -135,13 +148,33 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             "MapsActivity",
             "addManyMarker: $listStory"
         )
-        listStory.forEach {
-            val latLng = LatLng(
-                it.lat,
-                it.lon
+
+        if (listStory.isNotEmpty()) {
+            listStory.forEach {
+                val latLng = LatLng(
+                    it.lat,
+                    it.lon
+                )
+                mMap.addMarker(
+                    MarkerOptions().position(latLng).title(it.name).snippet(it.description)
+                )
+                boundsBuilder.include(latLng)
+            }
+
+            val bounds: LatLngBounds = boundsBuilder.build()
+            mMap.animateCamera(
+                CameraUpdateFactory.newLatLngBounds(
+                    bounds,
+                    resources.displayMetrics.widthPixels,
+                    resources.displayMetrics.heightPixels,
+                    300
+                )
             )
-            mMap.addMarker(MarkerOptions().position(latLng).title(it.name).snippet(it.description))
-            boundsBuilder.include(latLng)
+        }else{
+            Log.d(
+                "MapsActivity",
+                "addManyMarker: listStory is empty"
+            )
         }
     }
 

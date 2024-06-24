@@ -1,7 +1,9 @@
 package com.example.storie.feature.post
 
+import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -23,6 +25,8 @@ import com.example.storie.core.utils.reduceFileImage
 import com.example.storie.core.utils.uriToFile
 import com.example.storie.databinding.ActivityPostBinding
 import com.example.storie.feature.post.CameraActivity.Companion.CAMERAX_RESULT
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -33,7 +37,9 @@ class PostActivity : AppCompatActivity() {
 
     private val mViewModel by viewModels<PostViewModel>()
 
-    private val requestPermissionLauncher =
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+    private val requestCameraPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
@@ -52,11 +58,86 @@ class PostActivity : AppCompatActivity() {
             }
         }
 
-    private fun allPermissionsGranted() =
-        ContextCompat.checkSelfPermission(
+    private val requestLocationPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            when {
+                permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false -> {
+                    // Precise location access granted.
+                    getMyLastLocation()
+                }
+
+                permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false -> {
+                    // Only approximate location access granted.
+                    getMyLastLocation()
+                }
+
+                else -> {
+                    // No location access granted.
+                }
+            }
+        }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        binding = ActivityPostBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(
+                systemBars.left,
+                systemBars.top,
+                systemBars.right,
+                systemBars.bottom
+            )
+            insets
+        }
+
+        setupPermission()
+        setupToolbar()
+        setupClickListeners()
+        setupObserver()
+    }
+
+    private fun checkPermission(permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(
             this,
-            REQUIRED_PERMISSION
+            permission
         ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun getMyLastLocation() {
+        if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION) &&
+            checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+        ) {
+            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                if (location != null) {
+                    mViewModel.onEvent(
+                        PostViewEvent.OnLocation(
+                            location.latitude,
+                            location.longitude
+                        )
+                    )
+                } else {
+                    Toast.makeText(
+                        this,
+                        "Location is not found. Try Again",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        } else {
+            requestLocationPermissionLauncher.launch(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+            )
+        }
+    }
 
     private val launcherGallery = registerForActivityResult(
         ActivityResultContracts.PickVisualMedia()
@@ -82,27 +163,6 @@ class PostActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        binding = ActivityPostBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(
-                systemBars.left,
-                systemBars.top,
-                systemBars.right,
-                systemBars.bottom
-            )
-            insets
-        }
-
-        setupPermission()
-        setupToolbar()
-        setupClickListeners()
-        setupObserver()
-    }
 
     private fun setupObserver() {
         lifecycleScope.launch {
@@ -187,6 +247,11 @@ class PostActivity : AppCompatActivity() {
                     ).show()
                 }
             }
+            switchPostLocation.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    getMyLastLocation()
+                }
+            }
         }
     }
 
@@ -195,8 +260,8 @@ class PostActivity : AppCompatActivity() {
     }
 
     private fun setupPermission() {
-        if (!allPermissionsGranted()) {
-            requestPermissionLauncher.launch(REQUIRED_PERMISSION)
+        if (!checkPermission(REQUIRED_PERMISSION)) {
+            requestCameraPermissionLauncher.launch(REQUIRED_PERMISSION)
         }
     }
 
@@ -211,6 +276,6 @@ class PostActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val REQUIRED_PERMISSION = android.Manifest.permission.CAMERA
+        private const val REQUIRED_PERMISSION = Manifest.permission.CAMERA
     }
 }
