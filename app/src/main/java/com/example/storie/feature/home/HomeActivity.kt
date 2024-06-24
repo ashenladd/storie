@@ -300,5 +300,6 @@ class HomeActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         mStoriesPagingAdapter.refresh()
+        binding.rvStories.scrollToPosition(0)
     }
 }

@@ -33,4 +33,7 @@
     <string name="title_carousel_1">Discover New Stories Every Day</string>
     <string name="title_carousel_2">Step into the World of Stories</string>
     <string name="title_carousel_3">Find Your Next Escape</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="label_map">peta</string>
+    <string name="label_location">Lokasi</string>
 </resources>

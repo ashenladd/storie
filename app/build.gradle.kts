@@ -57,6 +57,9 @@ android {
         jvmTarget = "1.8"
         freeCompilerArgs += listOf("-Xopt-in=kotlin.RequiresOptIn")
     }
+    testOptions {
+        animationsDisabled = true
+    }
 }
 
 dependencies {
@@ -69,8 +72,6 @@ dependencies {
     implementation(libs.play.services.maps)
     implementation(libs.play.services.location)
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 
     //Networking
     implementation(libs.retrofit)
@@ -109,9 +110,22 @@ dependencies {
     // Testing
     androidTestImplementation(libs.androidx.core.testing) //InstantTaskExecutorRule
     androidTestImplementation(libs.kotlinx.coroutines.test) //TestDispatcher
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.runner)
+    androidTestImplementation(libs.androidx.rules)
+    androidTestImplementation(libs.androidx.espresso.intents)
+    implementation (libs.androidx.tracing)
 
     testImplementation(libs.androidx.core.testing) // InstantTaskExecutorRule
     testImplementation(libs.kotlinx.coroutines.test) //TestDispatcher
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.inline)
+
+    // For Idling Resource
+    implementation(libs.androidx.espresso.idling.resource)
+
+    //mock web server
+    androidTestImplementation(libs.mockwebserver)
+    androidTestImplementation(libs.okhttp3.okhttp.tls)
 }
