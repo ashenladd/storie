@@ -44,14 +44,22 @@
                 app:navigationIconTint="@color/white"
                 app:titleTextAppearance="@style/TextAppearance.Material3.HeadlineSmall">
 
-                <ImageButton
-                    android:id="@+id/btn_account"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_button_transparent_blue_ripple"
-                    android:contentDescription="@string/label_log_out"
-                    android:src="@drawable/ic_user"
-                    app:tint="@color/white" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:id="@+id/btn_account"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_button_transparent_blue_ripple"
+                        android:contentDescription="@string/label_log_out"
+                        android:src="@drawable/ic_user"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/white" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.appbar.MaterialToolbar>
 
