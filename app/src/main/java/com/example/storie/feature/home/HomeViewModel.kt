@@ -1,6 +1,7 @@
 package com.example.storie.feature.home
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -8,7 +9,6 @@ import androidx.paging.cachedIn
 import com.example.storie.core.DataStoreManager
 import com.example.storie.data.Result
 import com.example.storie.data.local.entity.StoryEntity
-import com.example.storie.data.remote.mapper.toModel
 import com.example.storie.domain.repository.AppRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -31,6 +31,9 @@ class HomeViewModel @Inject constructor(
 
     private val _viewState = MutableStateFlow(HomeViewState())
     val viewState get() = _viewState.asStateFlow()
+
+    private val _listStory = MutableLiveData<PagingData<StoryEntity>>()
+    val listStory: LiveData<PagingData<StoryEntity>> = _listStory
 
     val storiesPagingData: LiveData<PagingData<StoryEntity>> = appRepository.getStoriesPaging()
         .cachedIn(viewModelScope)
@@ -57,6 +60,14 @@ class HomeViewModel @Inject constructor(
                     }
                 }
             }
+
+            is HomeViewEvent.FetchStories -> {
+                storiesPagingData.observe(event.lifecycleOwner) { pagingData ->
+                    viewModelScope.launch {
+                        _listStory.value = pagingData
+                    }
+                }
+            }
         }
     }
 
@@ -69,13 +80,6 @@ class HomeViewModel @Inject constructor(
                     }
 
                     is Result.Success -> {
-                        _viewState.update {
-                            it.copy(
-                                listStory = result.data.listStory?.map {
-                                    it.toModel()
-                                } ?: emptyList()
-                            )
-                        }
                         _viewEffect.emit(
                             HomeViewEffect.OnSuccess(
                                 result.data.message ?: "Get Stories Success"

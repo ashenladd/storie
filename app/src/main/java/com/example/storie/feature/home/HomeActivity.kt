@@ -16,6 +16,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.storie.R
 import com.example.storie.databinding.ActivityHomeBinding
 import com.example.storie.domain.model.CarouselModel
@@ -121,6 +122,19 @@ class HomeActivity : AppCompatActivity() {
                 this@HomeActivity,
                 LinearLayoutManager.VERTICAL,
                 false
+            )
+
+            mStoriesPagingAdapter.registerAdapterDataObserver(
+                object : RecyclerView.AdapterDataObserver() {
+                    override fun onItemRangeInserted(
+                        positionStart: Int,
+                        itemCount: Int,
+                    ) {
+                        if (positionStart == 0) {
+                            binding.rvStories.layoutManager?.scrollToPosition(0)
+                        }
+                    }
+                },
             )
 
             mStoriesPagingAdapter.setOnItemClickListener(object :
@@ -242,6 +256,12 @@ class HomeActivity : AppCompatActivity() {
                 it
             )
         }
+        mViewModel.listStory.observe(this@HomeActivity) {
+            mStoriesPagingAdapter.submitData(
+                lifecycle,
+                it
+            )
+        }
     }
 
 
@@ -295,9 +315,5 @@ class HomeActivity : AppCompatActivity() {
 
     private fun showLoading(isLoading: Boolean) {
         binding.cpiYourStory.visibility = if (isLoading) View.VISIBLE else View.GONE
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 }

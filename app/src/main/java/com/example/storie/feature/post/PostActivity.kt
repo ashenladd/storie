@@ -24,6 +24,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.storie.core.utils.reduceFileImage
 import com.example.storie.core.utils.uriToFile
 import com.example.storie.databinding.ActivityPostBinding
+import com.example.storie.feature.home.HomeActivity
 import com.example.storie.feature.post.CameraActivity.Companion.CAMERAX_RESULT
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -197,7 +198,12 @@ class PostActivity : AppCompatActivity() {
 
             is PostViewEffect.OnSuccess -> {
                 showLoading(false)
-                onBackPressedDispatcher.onBackPressed()
+                val intent = Intent(
+                    this,
+                    HomeActivity::class.java
+                )
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
             }
 
             is PostViewEffect.OnError -> {
